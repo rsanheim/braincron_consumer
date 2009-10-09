@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "braincron_consumer"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Message consumer for Braincron}
+    gem.description = %Q{Consumes messages, tells Chatterbox to send them along to the right place}
     gem.email = "rsanheim@gmail.com"
     gem.homepage = "http://github.com/rsanheim/braincron_consumer"
     gem.authors = ["Rob Sanheim"]
@@ -32,9 +32,14 @@ task :spec => :check_dependencies
 
 task :default => :spec
 
+task :environment do
+  require "lib/braincron"
+end
+
 namespace :consumer do
-  task :start do
-    Braincron.start!
+  desc "Start consumer"
+  task :start => :environment do
+    Braincron.boot!
   end
   
   task :stop do

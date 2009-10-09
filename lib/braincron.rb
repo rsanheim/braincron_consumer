@@ -1,4 +1,6 @@
 require 'pathname'
+lib = Pathname(__FILE__).join("..", "..", "lib").expand_path
+$LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
 require 'logger'
 require 'syslog_formatter' 
 
@@ -18,14 +20,14 @@ module Braincron
   extend self
   extend ActiveSupport::Memoizable
   
-  def root
-    Pathname.new(__FILE__).join("../../").expand_path
-  end
-  
   def boot!
     logger.info { "Starting braincron_consumer" }
     setup_consumer
     start_consumer
+  end
+
+  def root
+    Pathname.new(__FILE__).join("../../").expand_path
   end
   
   def logger

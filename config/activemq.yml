@@ -1,0 +1,22 @@
+development:
+  host: localhost
+  port: 61613
+  type: "stomp"
+  
+test: &TEST
+  host: should-never-try
+  port: 61500
+  type: "stomp"
+
+integration:
+  host: localhost
+  port: 61623
+  type: "stomp"
+  
+production:
+  host: localhost
+  port: 61613
+  type: "stomp"
+
+cucumber:
+  <<: *TEST
