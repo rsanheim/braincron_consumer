@@ -52,6 +52,7 @@ module Braincron
   end
   
   def configure_action_mailer
+    ActionMailer::Base.logger = logger
     ActionMailer::Base.delivery_method = case env
       when "development", "test" then :test
       else raise("not yet for #{env}")
