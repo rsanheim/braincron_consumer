@@ -15,4 +15,15 @@ describe Braincron do
       Braincron.boot!
     end
   end
+  
+  it "should be in test env" do
+    Braincron.env.should == "test"
+  end
+  
+  describe "queue_config" do
+    it "should load config from YAML file" do
+      YAML.expects(:load_file).returns({"test" => {"test" => "config"}})
+      Braincron.queue_config.should == {"test" => "config"}
+    end
+  end
 end

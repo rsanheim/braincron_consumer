@@ -1,3 +1,4 @@
+ENV["BRAINCRON_ENV"] = "test"
 require 'micronaut'
 require 'mocha'
 

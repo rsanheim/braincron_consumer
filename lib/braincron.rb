@@ -13,7 +13,7 @@ end
 require 'active_support'
 require 'rosetta_queue'
 require 'rosetta_queue/consumer_managers/threaded'
-
+require 'braincron/queue'
 require 'braincron/consumer'
 
 module Braincron
@@ -22,6 +22,7 @@ module Braincron
   
   def boot!
     logger.info { "Starting braincron_consumer" }
+    configure_queue
     setup_consumer
     start_consumer
   end
@@ -38,6 +39,20 @@ module Braincron
   end
   
   memoize :logger
+  
+  def env
+    ENV["BRAINCRON_ENV"]
+  end
+  
+  def queue_config 
+    YAML.load_file(root.join("config", "activemq.yml")).fetch(env) do
+       raise(IndexError, "No config values found for #{env} in config/activemq.yml")
+    end
+  end
+  
+  def configure_queue
+    Braincron::Queue.configure
+  end
   
   def setup_consumer
     RosettaQueue.logger = logger
