@@ -1,4 +1,4 @@
-require 'chatterbox'
+require 'braincron'
 
 module Braincron
   class Consumer
@@ -12,7 +12,7 @@ module Braincron
     
     def on_message(message)
       result = Chatterbox.publish_notice(message)
-      send_result(result) 
+      # send_result(result) 
     rescue => e
       handle_failure(message, e)
     end

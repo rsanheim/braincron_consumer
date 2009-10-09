@@ -13,6 +13,8 @@ end
 require 'active_support'
 require 'rosetta_queue'
 require 'rosetta_queue/consumer_managers/threaded'
+require 'chatterbox'
+require 'chatterbox/email'
 require 'braincron/queue'
 require 'braincron/consumer'
 
@@ -27,7 +29,7 @@ module Braincron
     setup_consumer
     start_consumer
   end
-
+  
   def root
     Pathname.new(__FILE__).join("../../").expand_path
   end
@@ -46,6 +48,7 @@ module Braincron
   end
   
   def configure_chatterbox
+    Chatterbox.logger = logger
     Chatterbox::Publishers.register do |notice|
       Chatterbox::Email.deliver(notice)
     end
