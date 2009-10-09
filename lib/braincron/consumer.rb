@@ -11,7 +11,7 @@ module Braincron
     options 'activemq.prefetchSize' => 1, :ack => 'client'
     
     def on_message(message)
-      result = Chatterbox.handle(message)
+      result = Chatterbox.publish_notice(message)
       send_result(result) 
     rescue => e
       handle_failure(message, e)

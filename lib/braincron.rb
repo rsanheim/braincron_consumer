@@ -22,6 +22,7 @@ module Braincron
   
   def boot!
     logger.info { "Starting braincron_consumer" }
+    configure_chatterbox
     configure_queue
     setup_consumer
     start_consumer
@@ -42,6 +43,12 @@ module Braincron
   
   def env
     ENV["BRAINCRON_ENV"]
+  end
+  
+  def configure_chatterbox
+    Chatterbox::Publishers.register do |notice|
+      Chatterbox::Email.deliver(notice)
+    end
   end
   
   def queue_config 
