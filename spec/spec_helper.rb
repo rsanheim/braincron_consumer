@@ -4,7 +4,7 @@ require 'micronaut'
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
-require 'braincron_consumer'
+require 'braincron'
 
 def not_in_editor?
   !(ENV.has_key?('TM_MODE') || ENV.has_key?('EMACS') || ENV.has_key?('VIM'))
