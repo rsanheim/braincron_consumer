@@ -2,9 +2,9 @@ module Braincron
   module Queue
     def self.configure
       RosettaQueue::Destinations.define do |queue|
-        queue.map :requests, "/braincron/requests"
-        queue.map :results, "/braincron/results"
-        queue.map :exceptions, "/braincron/exceptions"
+        queue.map :requests, "/queue/braincron/requests"
+        queue.map :results, "/queue/braincron/results"
+        queue.map :exceptions, "/queue/braincron/exceptions"
       end
 
       config = Braincron.queue_config
