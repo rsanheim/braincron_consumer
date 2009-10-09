@@ -46,7 +46,7 @@ module Braincron
   
   def queue_config 
     YAML.load_file(root.join("config", "activemq.yml")).fetch(env) do
-       raise(IndexError, "No config values found for #{env} in config/activemq.yml")
+       raise(IndexError, "No config values found for #{env.inspect} in config/activemq.yml")
     end
   end
   

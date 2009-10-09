@@ -33,6 +33,7 @@ task :spec => :check_dependencies
 task :default => :spec
 
 task :environment do
+  ENV["BRAINCRON_ENV"] ||= "development"
   require "lib/braincron"
 end
 
