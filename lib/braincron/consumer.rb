@@ -1,3 +1,5 @@
+require 'chatterbox'
+
 module Braincron
   class Consumer
     include RosettaQueue::MessageHandler

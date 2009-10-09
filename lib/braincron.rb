@@ -32,7 +32,7 @@ module Braincron
   end
   
   def logger
-    logger = Logger.new(root.join("log", "braincron_consumer.log"))
+    logger = Logger.new(root.join("log", "consumer.log"))
     logger.formatter = SyslogFormatter.new
     logger.level = Logger::DEBUG
     logger
