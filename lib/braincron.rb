@@ -24,10 +24,14 @@ module Braincron
   
   def boot!
     logger.info { "Starting braincron_consumer" }
+    configure
+    start_consumer
+  end
+  
+  def configure
+    configure_action_mailer
     configure_chatterbox
     configure_queue
-    setup_consumer
-    start_consumer
   end
   
   def root
@@ -47,25 +51,29 @@ module Braincron
     ENV["BRAINCRON_ENV"]
   end
   
+  def configure_action_mailer
+    ActionMailer::Base.delivery_method = case env
+      when "development", "test" then :test
+      else raise("not yet for #{env}")
+    end
+  end
+  
   def configure_chatterbox
     Chatterbox.logger = logger
     Chatterbox::Publishers.register do |notice|
       Chatterbox::Email.deliver(notice)
     end
   end
+
+  def configure_queue
+    RosettaQueue.logger = logger
+    Braincron::Queue.configure
+  end
   
   def queue_config 
     YAML.load_file(root.join("config", "activemq.yml")).fetch(env) do
        raise(IndexError, "No config values found for #{env.inspect} in config/activemq.yml")
     end
-  end
-  
-  def configure_queue
-    Braincron::Queue.configure
-  end
-  
-  def setup_consumer
-    RosettaQueue.logger = logger
   end
   
   def start_consumer

@@ -20,7 +20,8 @@ module Braincron
     def handle_failure(message, exception)
       logger.error "Error processing #{message.inspect}"
       logger.error exception
-      RosettaQueue::Producer.publish :exceptions, exception
+      p exception
+      # RosettaQueue::Producer.publish :exceptions, exception
     end
 
     def send_failure_result(message)

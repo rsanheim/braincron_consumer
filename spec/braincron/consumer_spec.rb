@@ -13,7 +13,8 @@ describe Braincron::Consumer do
   
   describe "on_message" do
     before do
-      Braincron.configure_chatterbox
+      # NOTE: may want to move this into spec helper
+      Braincron.configure
     end
     
     it "should send message to Chatterbox" do
@@ -23,6 +24,7 @@ describe Braincron::Consumer do
     end
     
     it "should send an email" do
+      p ActionMailer::Base.delivery_method
       lambda {
         Braincron::Consumer.new.on_message(stub_message)
       }.should change(ActionMailer::Base.deliveries, :size)

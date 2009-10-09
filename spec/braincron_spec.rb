@@ -26,4 +26,11 @@ describe Braincron do
       Braincron.queue_config.should == {"test" => "config"}
     end
   end
+  
+  describe "configure_action_mailer" do
+    it "should return test for test mode" do
+      Braincron.configure_action_mailer
+      ActionMailer::Base.delivery_method.should == :test
+    end
+  end
 end

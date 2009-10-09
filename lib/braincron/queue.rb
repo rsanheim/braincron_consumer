@@ -17,7 +17,7 @@ module Braincron
       end
 
       RosettaQueue::Filters.define do |filter_for|
-        filter_for.receiving { |message| ActiveSupport::JSON.decode(message) }
+        filter_for.receiving { |message| ActiveSupport::JSON.decode(message).with_indifferent_access }
         filter_for.sending { |hash| hash.to_json }
       end
     end
