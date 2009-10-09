@@ -9,7 +9,10 @@ braincron_vendor_gems.children.each do |dir|
 end
 
 require 'active_support'
+require 'rosetta_queue'
 require 'rosetta_queue/consumer_managers/threaded'
+
+require 'braincron/consumer'
 
 module Braincron
   extend self
@@ -19,8 +22,9 @@ module Braincron
     Pathname.new(__FILE__).join("../../").expand_path
   end
   
-  def start!
-    init_logging
+  def boot!
+    logger.info { "Starting braincron_consumer" }
+    setup_consumer
     start_consumer
   end
   
@@ -33,11 +37,15 @@ module Braincron
   
   memoize :logger
   
+  def setup_consumer
+    RosettaQueue.logger = logger
+  end
+  
   def start_consumer
     RosettaQueue::ThreadedManager.create do |manager|
       manager.add(Braincron::Consumer.new, "request_consumer")
+      manager.start
     end
-    manager.start
   end
   
 end
