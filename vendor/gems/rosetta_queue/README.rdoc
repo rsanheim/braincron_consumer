@@ -1,0 +1,11 @@
+= Rosetta Queue
+
+Rosetta Queue is a messaging gateway API with adapters for many messaging systems available in Ruby. Messaging systems can be easily switched out with a small configuration change. Code for testing on the object and application level is also provided.
+
+Documentation can be found on the wiki.[http://wiki.github.com/bmabey/rosetta_queue]
+
+== Authors
+
+Ben Mabey [http://github.com/bmabey]
+
+Chris Wyckoff [http://github.com/cwyckoff]

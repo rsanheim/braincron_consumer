@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/rsanheim/braincron_consumer"
     gem.authors = ["Rob Sanheim"]
     gem.add_development_dependency "spicycode-micronaut"
+    
   end
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"

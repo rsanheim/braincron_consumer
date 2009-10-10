@@ -4,10 +4,9 @@ $LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
 require 'logger'
 require 'syslog_formatter' 
 
-# TODO rip all this out with proper vendor'ed gems
-braincron_vendor_gems = Pathname(__FILE__).parent.parent.parent.join("braincron", "vendor", "gems")
-braincron_vendor_gems.children.each do |dir|
-  $LOAD_PATH << dir.join("lib")
+vendor_gems = Pathname(__FILE__).join("..", "..", "vendor", "gems").expand_path
+vendor_gems.children.each do |dir|
+  $LOAD_PATH.unshift dir.join("lib")
 end
 
 require 'active_support'
@@ -17,6 +16,8 @@ require 'chatterbox'
 require 'chatterbox/email'
 require 'braincron/queue'
 require 'braincron/consumer'
+require 'rosetta_queue/adapter'
+require 'rosetta_queue/adapters/stomp'
 
 module Braincron
   extend self
